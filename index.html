@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colorful Animated Login Page</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Fullscreen Background with Gradient Animation */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(270deg, #6a11cb, #2575fc, #00f2fe);
+      background-size: 600% 600%;
+      animation: gradientAnimation 10s infinite alternate;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Gradient Animation Keyframes */
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+
+    /* Login Container */
+    .login-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      padding: 40px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Fade-In Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Title Styling */
+    h1 {
+      color: #fff;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      animation: floatUp 1.5s ease-in-out infinite alternate;
+    }
+
+    /* Floating Animation for Title */
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Input Fields */
+    .input-field {
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+      animation: slideIn 0.8s ease-in-out forwards;
+    }
+
+    /* Slide-In Animation for Input Fields */
+    @keyframes slideIn {
+      from {
+        transform: translateX(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .input-field:focus {
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Login Button */
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #ff6a88, #ff7b54, #ff9a9e);
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulse 1.5s ease-in-out infinite alternate;
+    }
+
+    /* Pulse Animation for Button */
+    @keyframes pulse {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.05);
+      }
+    }
+
+    .login-btn:hover {
+      background: linear-gradient(90deg, #ff9a9e, #ff7b54, #ff6a88);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Error Message */
+    .error-message {
+      color: #ff4d4d;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      display: none;
+      animation: shake 0.5s ease-in-out;
+    }
+
+    /* Shake Animation for Error Message */
+    @keyframes shake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-5px);
+      }
+      50% {
+        transform: translateX(5px);
+      }
+      75% {
+        transform: translateX(-5px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Form -->
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <input type="text" class="input-field" id="username" placeholder="Username" required>
+      <input type="password" class="input-field" id="password" placeholder="Password" required>
+      <button type="submit" class="login-btn">Login</button>
+      <p class="error-message" id="errorMessage">Invalid username or password!</p>
+    </form>
+  </div>
+
+  <script>
+    // Hardcoded Username and Password
+    const validUsername = "admin";
+    const validPassword = "password123";
+
+    // Handle Form Submission
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get Input Values
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      // Validate Credentials
+      if (username === validUsername && password === validPassword) {
+        alert("Login Successful!");
+        window.location.href = "https://example.com"; // Redirect to another page
+      } else {
+        // Show Error Message with Shake Animation
+        const errorMessage = document.getElementById("errorMessage");
+        errorMessage.style.display = "block";
+        errorMessage.classList.add("shake");
+        setTimeout(() => {
+          errorMessage.classList.remove("shake");
+        }, 500); // Remove shake class after animation ends
+      }
+    });
+  </script>
+
+</body>
+</html>
